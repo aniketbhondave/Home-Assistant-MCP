@@ -12,31 +12,30 @@ This project bridges Claude AI and Home Assistant, allowing you to:
 
 ## Features
 
-- 🏠 **Local Home Assistant Integration** - Connects to your local Home Assistant instance
+- 🏠 **Local Smart Home Integration** - Your Home Assistant instance and devices stay completely local; only your chat messages go to Claude for processing/Understanding your conversation
 - 🤖 **Claude AI Control** - Use natural language to control devices
 - 🔐 **Secure Credentials** - Environment-based configuration keeps tokens safe
 - 🔌 **MCP Protocol** - Follows Model Context Protocol standard
 - ⚡ **Real-time Device Control** - Execute automations and control devices instantly
-
+- 🌐 **MCP Standard** - Works with any AI tool/chat that supports Model Context Protocol, not limited to Claude
 
 ## Compatibility
 
 This MCP server works with any AI assistant that supports the Model Context Protocol standard, including:
-- Claude (claude.ai, Claude API)
+- Claude (claude.ai, Claude Desktop, Claude API)
 - VS Code (with MCP extension)
 - Other MCP-compatible tools (growing ecosystem)
 
 This means your smart home integration isn't vendor-locked and will work with future AI tools that adopt the MCP standard.
-
 
 ## Prerequisites
 
 - Node.js 16+ 
 - Local Home Assistant instance running
 - Home Assistant long-lived access token
-- Claude AI integration
+- Claude Desktop or Claude.ai with Developer access
 
-## Setup
+## Quick Start
 
 ### 1. Clone and Install
 
@@ -46,34 +45,109 @@ cd Home-Assistant-MCP
 npm install
 ```
 
-### 2. Configure Environment Variables
+### 2. Get Your Home Assistant Token
 
-Copy the example configuration:
+1. Open your Home Assistant instance
+2. Click your profile (bottom left)
+3. Scroll to "Long-lived access tokens"
+4. Click "Create Token"
+5. Name it (e.g., "Claude MCP") and copy the token
+
+### 3. Add to Claude Desktop
+
+1. Click the **settings icon** (gear) in the top right
+2. Click **Developer** tab
+3. Click **Edit Config** button
+4. Paste this configuration:
+
+```json
+{
+  "mcpServers": {
+    "home-assistant": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd /path/to/Home-Assistant-MCP && HA_URL=http://your-home-assistant-ip:8123 HA_TOKEN=your-token-here node index.js"
+      ]
+    }
+  }
+}
+```
+
+5. Replace the following:
+   - `/path/to/Home-Assistant-MCP` - Full path to your project (e.g., `/Users/yourname/Home-Assistant-MCP`)
+   - `http://your-home-assistant-ip:8123` - Your Home Assistant URL (use IP address, not homeassistant.local)
+   - `your-token-here` - The token you copied from Home Assistant
+
+6. Click **Save**
+7. Restart Claude Desktop completely (close and reopen)
+
+### 4. Test It
+
+Ask Claude:
+- "List all my devices"
+- "Turn on the bedroom light"
+- "What devices are currently on?"
+
+Done! 🎉
+
+## Configuration Methods
+
+### Method 1: Command Line (Recommended)
+
+Pass credentials directly in the command (simplest setup):
+
+```json
+{
+  "mcpServers": {
+    "home-assistant": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd /path/to/Home-Assistant-MCP && HA_URL=http://192.168.1.100:8123 HA_TOKEN=your_token node index.js"
+      ]
+    }
+  }
+}
+```
+
+**Advantages:**
+- Simple setup - no extra files
+- Works everywhere (local, Smithery, etc.)
+- Credentials stay out of version control
+
+### Method 2: Environment File (.env)
+
+For local development, you can use a `.env` file:
+
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and add your Home Assistant details:
+Edit `.env`:
 ```
-HOME_ASSISTANT_URL=http://your-home-assistant-ip:8123
-HOME_ASSISTANT_TOKEN=your_long_lived_access_token
+HOME_ASSISTANT_URL=http://192.168.1.100:8123
+HOME_ASSISTANT_TOKEN=your_token_here
 NODE_ENV=development
 ```
 
-**How to get your Home Assistant token:**
-1. Go to your Home Assistant instance
-2. Click your profile (bottom left)
-3. Scroll to "Long-lived access tokens"
-4. Create a new token
-5. Copy and paste it in `.env`
+Then use simpler command in Claude config:
 
-### 3. Start the Server
-
-```bash
-npm start
+```json
+{
+  "mcpServers": {
+    "home-assistant": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd /path/to/Home-Assistant-MCP && node index.js"
+      ]
+    }
+  }
+}
 ```
 
-The MCP server will be ready to connect with Claude.
+**⚠️ Important:** Never commit `.env` to GitHub (it's in `.gitignore`)
 
 ## Usage
 
@@ -81,41 +155,47 @@ Once connected to Claude:
 
 ### Example Commands
 
-- "List All my devices"
-- "Turn on bedroom light"
+- "List all my devices"
+- "Turn on the bedroom light"
 - "What devices are currently on?"
 - "Turn off all lights"
+- "Get the status of my kitchen fan"
 
 Claude will understand natural language and communicate with your Home Assistant instance to perform the requested actions.
 
+## Project Structure
 
-## Configuration
-
-All configuration is handled through environment variables in the `.env` file:
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `HOME_ASSISTANT_URL` | Your Home Assistant instance URL | `http://192.168.x.xxx:8123` |
-| `HOME_ASSISTANT_TOKEN` | Long-lived access token | `eyJhbG...` |
-| `NODE_ENV` | Environment mode | `development` or `production` |
+```
+Home-Assistant-MCP/
+├── index.js                 # Main MCP server entry point
+├── .env.example            # Environment variables template
+├── .gitignore              # Git configuration
+├── package.json            # Node.js dependencies
+├── README.md               # This file
+└── LICENSE                 # MIT License
+```
 
 ## Deployment
 
 ### Local Testing
+
 ```bash
 npm start
 ```
 
+The server will start and wait for connections.
+
 ### Smithery Deployment
 
-This project is designed to be deployed to Smithery. Instructions for Smithery deployment will be added once the project is published.
+This MCP is ready to be deployed to Smithery. Users will be able to install it directly through the Smithery marketplace.
 
 ## Security Notes
 
-- ⚠️ **Never commit `.env` file** - it contains sensitive credentials
-- Always use HTTPS in production environments
+- ⚠️ **Never commit `.env` file** - It contains sensitive credentials
+- Use IP addresses instead of hostnames (homeassistant.local) for Home Assistant URL
 - Keep your Home Assistant token secure and rotate it periodically
 - Use strong authentication for your Home Assistant instance
+- Always verify the Home Assistant instance is accessible only from trusted networks
 
 ## Status & Roadmap
 
@@ -125,36 +205,46 @@ Current features and planned enhancements:
 
 - [x] Basic MCP server setup
 - [x] Home Assistant connection
-- [x] Check Device Status via Claude
-- [x] Turn On/OFF Devices via Claude
+- [x] Check device status via Claude
+- [x] Turn devices on/off via Claude
+- [x] Natural language device matching
+- [ ] Brightness and color control
+- [ ] Automation triggering
+- [ ] Climate control (temperature, humidity)
 - [ ] Enhanced error handling
-- [ ] Support for more complex automations
-- [ ] Advanced scene management
+- [ ] Batch device operations
 - [ ] Device state caching for performance
+- [ ] Advanced scene management
 
 ## Troubleshooting
 
-### Connection Issues
-- Verify `HOME_ASSISTANT_URL` is accessible from your machine
-- Check your Home Assistant logs for authentication errors
-- Ensure the token hasn't expired
+### "Server transport closed unexpectedly"
+- Verify the path to your Home Assistant MCP project is correct
+- Check that Home Assistant URL and token are correct (no typos)
+- Ensure Home Assistant is accessible from your machine
+- Restart Claude Desktop completely
+
+### "Cannot connect to Home Assistant"
+- Verify `HOME_ASSISTANT_URL` is correct (use IP, not hostname)
+- Check the token hasn't expired - create a new one if needed
+- Ensure Home Assistant is running
+- Verify the machine running Claude can reach Home Assistant IP
 
 ### Device Control Not Working
 - Verify the token has appropriate permissions in Home Assistant
 - Check that devices exist in your Home Assistant instance
-- Review Claude's responses for error messages
+- Review Claude's responses for specific error messages
 
-### Environment Variables Not Loading
-- Ensure `.env` file is in the project root
-- Check that variable names match exactly
-- Restart the server after changing `.env`
-
+### MCP Server not showing in Claude
+- Restart Claude Desktop completely (close and reopen)
+- Check JSON syntax in config file (invalid JSON will be ignored)
+- Verify all paths are absolute (full paths, not relative)
 
 ## License
 
 MIT License
 
-Copyright (c) 2024 [Your Name/Username]
+Copyright (c) 2026 Aniket Bhondave
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -173,6 +263,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Support
+
+For help and questions:
+- Check the [Troubleshooting](#troubleshooting) section above
+- Review [Home Assistant documentation](https://www.home-assistant.io/docs/)
+- Check [MCP documentation](https://modelcontextprotocol.io/docs/)
+- Open an issue on [GitHub](https://github.com/aniketbhondave/Home-Assistant-MCP/issues)
 
 ## Acknowledgments
 
