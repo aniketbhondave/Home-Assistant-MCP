@@ -67,7 +67,7 @@ npm install
       "command": "bash",
       "args": [
         "-c",
-        "cd /path/to/Home-Assistant-MCP && HOME_ASSISTANT_URL=http://your-home-assistant-ip:8123 HOME_ASSISTANT_TOKEN=your-token-here node index.js"
+        "cd /path/to/Home-Assistant-MCP && HOME_ASSISTANT_URL=http://192.168.x.xxx:8123 HOME_ASSISTANT_TOKEN=your-token-here node index.js"
       ]
     }
   }
@@ -76,7 +76,7 @@ npm install
 
 5. Replace the following:
    - `/path/to/Home-Assistant-MCP` - Full path to your project (e.g., `/Users/yourname/Home-Assistant-MCP`)
-   - `http://your-home-assistant-ip:8123` - Your Home Assistant URL (use IP address, not homeassistant.local)
+   - `http://192.168.x.xxx:8123` - Your Home Assistant URL (use IP address, not homeassistant.local)
    - `your-token-here` - The token you copied from Home Assistant
 
 6. Click **Save**
@@ -104,7 +104,7 @@ Pass credentials directly in the command (simplest setup):
       "command": "bash",
       "args": [
         "-c",
-        "cd /path/to/Home-Assistant-MCP && HA_URL=http://192.168.1.100:8123 HA_TOKEN=your_token node index.js"
+        "cd /path/to/Home-Assistant-MCP && HOME_ASSISTANT_URL=http://192.168.x.xxx:8123 HOME_ASSISTANT_TOKEN=your-token-here node index.js"
       ]
     }
   }
@@ -126,7 +126,7 @@ cp .env.example .env
 
 Edit `.env`:
 ```
-HOME_ASSISTANT_URL=http://192.168.1.100:8123
+HOME_ASSISTANT_URL=http://192.168.x.xxx:8123
 HOME_ASSISTANT_TOKEN=your_token_here
 NODE_ENV=development
 ```
@@ -191,7 +191,6 @@ This MCP is ready to be deployed to Smithery. Users will be able to install it d
 
 ## Security Notes
 
-- ⚠️ **Never commit `.env` file** - It contains sensitive credentials
 - Use IP addresses instead of hostnames (homeassistant.local) for Home Assistant URL
 - Keep your Home Assistant token secure and rotate it periodically
 - Use strong authentication for your Home Assistant instance
