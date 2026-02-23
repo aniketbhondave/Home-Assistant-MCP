@@ -2,7 +2,8 @@ import fetch from 'node-fetch';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const HA_URL = process.env.HOME_ASSISTANT_URL;
 const HA_TOKEN = process.env.HOME_ASSISTANT_TOKEN;

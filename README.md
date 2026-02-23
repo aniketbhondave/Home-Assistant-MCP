@@ -67,7 +67,7 @@ npm install
       "command": "bash",
       "args": [
         "-c",
-        "cd /path/to/Home-Assistant-MCP && HA_URL=http://your-home-assistant-ip:8123 HA_TOKEN=your-token-here node index.js"
+        "cd /path/to/Home-Assistant-MCP && HOME_ASSISTANT_URL=http://your-home-assistant-ip:8123 HOME_ASSISTANT_TOKEN=your-token-here node index.js"
       ]
     }
   }
