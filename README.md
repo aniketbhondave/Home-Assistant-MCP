@@ -91,68 +91,6 @@ Ask Claude:
 
 Done! 🎉
 
-## Configuration Methods
-
-### Method 1: Command Line (Recommended)
-
-Pass credentials directly in the command (simplest setup):
-
-```json
-{
-  "mcpServers": {
-    "home-assistant": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "cd /path/to/Home-Assistant-MCP && HOME_ASSISTANT_URL=http://192.168.x.xxx:8123 HOME_ASSISTANT_TOKEN=your-token-here node index.js"
-      ]
-    }
-  }
-}
-```
-
-**Advantages:**
-- Simple setup - no extra files
-- Works everywhere (local, Smithery, etc.)
-- Credentials stay out of version control
-
-### Method 2: Environment File (.env)
-
-For local development, you can use a `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
-```
-HOME_ASSISTANT_URL=http://192.168.x.xxx:8123
-HOME_ASSISTANT_TOKEN=your_token_here
-NODE_ENV=development
-```
-
-Then use simpler command in Claude config:
-
-```json
-{
-  "mcpServers": {
-    "home-assistant": {
-      "command": "bash",
-      "args": [
-        "-c",
-        "cd /path/to/Home-Assistant-MCP && node index.js"
-      ]
-    }
-  }
-}
-```
-
-**⚠️ Important:** Never commit `.env` to GitHub (it's in `.gitignore`)
-
-## Usage
-
-Once connected to Claude:
-
 ### Example Commands
 
 - "List all my devices"
@@ -175,19 +113,9 @@ Home-Assistant-MCP/
 └── LICENSE                 # MIT License
 ```
 
-## Deployment
-
-### Local Testing
-
-```bash
-npm start
-```
-
-The server will start and wait for connections.
-
 ### Smithery Deployment
 
-This MCP is ready to be deployed to Smithery. Users will be able to install it directly through the Smithery marketplace.
+This MCP is ready and planned to be deployed to Smithery. Users will be able to install it directly through the Smithery marketplace (TODO).
 
 ## Security Notes
 
@@ -279,4 +207,4 @@ For help and questions:
 
 ---
 
-**Note:** This project is in active development. Features and APIs may change. Please refer to the latest documentation for updates.
+**Note:** This project is in active development. Features and APIs may change. Please refer to README for updates.
