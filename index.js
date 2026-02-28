@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { createSandboxServer } from './sandbox.js';
 import { z } from 'zod';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -207,10 +208,7 @@ server.tool(
   }
 );
 
-// Export a sandbox server for Smithery scanning
-export function createSandboxServer() {
-  return server;
-}
+export { createSandboxServer };
 
 async function main() {
   const transport = new StdioServerTransport();
