@@ -207,6 +207,11 @@ server.tool(
   }
 );
 
+// Export a sandbox server for Smithery scanning
+export function createSandboxServer() {
+  return server;
+}
+
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
