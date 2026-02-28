@@ -10,8 +10,7 @@ const HA_URL = process.env.HOME_ASSISTANT_URL ? process.env.HOME_ASSISTANT_URL.r
 const HA_TOKEN = process.env.HOME_ASSISTANT_TOKEN;
 
 if (!HA_URL || !HA_TOKEN) {
-  console.error('Error: HOME_ASSISTANT_URL and HOME_ASSISTANT_TOKEN environment variables are required.');
-  process.exit(1);
+  console.error('Warning: HOME_ASSISTANT_URL and HOME_ASSISTANT_TOKEN environment variables not set. Server will work but tools may not function.');
 }
 
 const entityIdRegex = /^[a-z0-9_]+\.[a-z0-9_]+$/i;
