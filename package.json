@@ -4,6 +4,9 @@
   "description": "Control your Home Assistant smart home devices using Claude. Runs locally on your machine with complete privacy",
   "main": "index.js",
   "module": "index.js",
+  "bin": {
+    "home-assistant-mcp": "./index.js"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
