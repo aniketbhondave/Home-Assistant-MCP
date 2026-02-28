@@ -6,23 +6,92 @@
   "tools": [
     {
       "name": "list_devices",
-      "description": "List all Home Assistant devices"
+      "description": "List all Home Assistant devices",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "filter by domain e.g. light, switch, fan"
+          }
+        }
+      }
     },
     {
       "name": "control_device",
-      "description": "Control devices using natural language"
+      "description": "Control devices using natural language",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "turn_on",
+              "turn_off",
+              "get_state"
+            ],
+            "description": "action to perform"
+          },
+          "device_description": {
+            "type": "string",
+            "description": "natural language name of the device"
+          }
+        },
+        "required": [
+          "action",
+          "device_description"
+        ]
+      }
     },
     {
       "name": "turn_on",
-      "description": "Turn on a device"
+      "description": "Turn on a device",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "description": "Home Assistant entity ID"
+          }
+        },
+        "required": [
+          "entity_id"
+        ]
+      }
     },
     {
       "name": "turn_off",
-      "description": "Turn off a device"
+      "description": "Turn off a device",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "description": "Home Assistant entity ID"
+          }
+        },
+        "required": [
+          "entity_id"
+        ]
+      }
     },
     {
       "name": "get_state",
-      "description": "Get the state of a device"
+      "description": "Get the state of a device",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "description": "Home Assistant entity ID"
+          }
+        },
+        "required": [
+          "entity_id"
+        ]
+      }
     }
-  ]
+  ],
+  "resources": [],
+  "prompts": []
 }
