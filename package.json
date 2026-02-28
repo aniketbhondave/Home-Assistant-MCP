@@ -1,6 +1,6 @@
 {
   "name": "home-assistant-mcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Control your Home Assistant smart home devices using Claude. Runs locally on your machine with complete privacy",
   "main": "index.js",
   "module": "index.js",
