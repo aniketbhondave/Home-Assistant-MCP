@@ -1,0 +1,10 @@
+.env
+.env.example
+.gitignore
+.well-known
+.smithery
+node_modules
+*.log
+.git
+README.md
+LICENSE
