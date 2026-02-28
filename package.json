@@ -1,7 +1,7 @@
 {
-  "name": "homeassistant-mcp",
+  "name": "@aniketb/home-assistant-mcp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Control your Home Assistant smart home devices using Claude. Runs locally on your machine with complete privacy",
   "main": "index.js",
   "module": "index.js",
   "scripts": {
@@ -9,10 +9,22 @@
     "dev": "nodemon index.js",
     "setup": "cp .env.example .env"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "home-assistant",
+    "smart-home",
+    "claude",
+    "mcp",
+    "automation",
+    "iot"
+  ],
+  "author": "Aniket Bhondave",
+  "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aniketbhondave/Home-Assistant-MCP.git"
+  },
+  "homepage": "https://github.com/aniketbhondave/Home-Assistant-MCP#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.26.0",
     "node-fetch": "^3.3.2",
