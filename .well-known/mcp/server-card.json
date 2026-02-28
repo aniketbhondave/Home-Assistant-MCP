@@ -1,0 +1,28 @@
+{
+  "serverInfo": {
+    "name": "home-assistant-mcp",
+    "version": "1.0.0"
+  },
+  "tools": [
+    {
+      "name": "list_devices",
+      "description": "List all Home Assistant devices"
+    },
+    {
+      "name": "control_device",
+      "description": "Control devices using natural language"
+    },
+    {
+      "name": "turn_on",
+      "description": "Turn on a device"
+    },
+    {
+      "name": "turn_off",
+      "description": "Turn off a device"
+    },
+    {
+      "name": "get_state",
+      "description": "Get the state of a device"
+    }
+  ]
+}
